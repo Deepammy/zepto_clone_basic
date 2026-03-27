@@ -1,0 +1,38 @@
+import 'dart:convert';
+import '../../domain/entities/cart_item.dart';
+import '../../../products/data/models/product_model.dart';
+
+class CartItemModel extends CartItem {
+  const CartItemModel({
+    required super.product,
+    required super.quantity,
+  });
+
+  factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    return CartItemModel(
+      product: ProductModel.fromJson(json['product']),
+      quantity: json['quantity'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'product': (product as ProductModel).toJson(),
+      'quantity': quantity,
+    };
+  }
+
+  CartItem toEntity() {
+    return CartItem(
+      product: product,
+      quantity: quantity,
+    );
+  }
+
+  factory CartItemModel.fromEntity(CartItem item) {
+    return CartItemModel(
+      product: ProductModel.fromEntity(item.product),
+      quantity: item.quantity,
+    );
+  }
+}
